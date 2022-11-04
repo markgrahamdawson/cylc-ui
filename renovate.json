@@ -7,6 +7,10 @@
   "automergeStrategy": "squash",
   "packageRules": [
     {
+      "matchPackageNames": ["typescript"],
+      "automerge": true
+    },
+    {
       "matchPackageNames": ["yarn"],
       "automerge": true
     },
@@ -78,7 +82,10 @@
     {
       "groupName": "eslint packages",
       "matchPackageNames": ["standard"],
-      "matchPackagePatterns": ["^eslint"],
+      "matchPackagePatterns": [
+        "^eslint",
+        "^@typescript-eslint"
+      ],
       "automerge": true,
       "schedule": ["on the first day of the month"]
     },

@@ -1,0 +1,29 @@
+{
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.vue",
+        // "tests/**/*"
+    ],
+    "exclude": [
+        "src/services/mock/json/*"
+    ],
+    "compilerOptions": {
+        // "checkJs": true,
+        "paths": {
+            "@/*": ["./src/*"]
+        },
+
+        "allowJs": true,
+
+        // Vue recommended settings:
+        "isolatedModules": true,
+        "strict": true,
+
+        // // if using webpack 2+ or rollup, to leverage tree shaking:
+        // "module": "es2015",
+        // "moduleResolution": "node"
+    },
+    "watchOptions": {
+        "excludeFiles": ["**/node_modules"]
+    }
+}

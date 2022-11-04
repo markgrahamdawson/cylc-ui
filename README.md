@@ -126,7 +126,7 @@ The project was originally created with [vue-cli](https://cli.vuejs.org/), but
 has switched to [Vite](https://vitejs.dev/) with the upgrade from Vue 2 to 3.
 
 The configuration for how the app is served and built is defined in
-[`vite.config.js`](vite.config.js).
+[`vite.config.ts`](vite.config.ts).
 
 We are currently using the [Vuetify component library](https://vuetifyjs.com/en/).
 Its configuration is defined in [`src/plugins/vuetify.js`](src/plugins/vuetify.js).
