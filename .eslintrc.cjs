@@ -17,10 +17,15 @@
 
 module.exports = {
   root: true,
+  plugins: [
+    '@typescript-eslint',
+  ],
+  parser: 'vue-eslint-parser',
   parserOptions: {
     /* Allow new ECMAScript syntax but not globals. This is because vite/esbuild
     transforms syntax to es2015 (at the earliest) but does not pollyfill APIs. */
     ecmaVersion: 'latest',
+    parser: '@typescript-eslint/parser'
   },
   extends: [
     'standard',
@@ -28,6 +33,7 @@ module.exports = {
     'plugin:vue/vue3-essential',
     'plugin:vuetify/base',
     'plugin:cypress/recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   rules: {
     'comma-dangle': [
@@ -60,14 +66,9 @@ module.exports = {
     ],
     'cypress/unsafe-to-chain-command': [
       'off'
-    ]
+    ],
+    '@typescript-eslint/no-unused-vars': [
+      'off' // handled by typescript itself
+    ],
   },
-  overrides: [
-    {
-      files: ['*.ts'],
-      parser: '@typescript-eslint/parser',
-      plugins: ['@typescript-eslint'],
-      extends: ['plugin:@typescript-eslint/recommended']
-    }
-  ]
 }
