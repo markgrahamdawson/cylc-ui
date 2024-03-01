@@ -20,11 +20,11 @@
  * strings are treated as infinity.
  *
  * @export
- * @param {*} a - The first element for comparison.
- * @param {*} b - The second element for comparison.
- * @return {number} A number > 0 if a > b, or < 0 if a < b, or 0 if a === b
+ * @param a - The first element for comparison.
+ * @param b - The second element for comparison.
+ * @return A number > 0 if a > b, or < 0 if a < b, or 0 if a === b
  */
-export function datetimeComparator (a, b) {
+export function datetimeComparator (a: string | number, b: string | number): number {
   a = (a ?? '') === '' ? Infinity : new Date(a).getTime()
   b = (b ?? '') === '' ? Infinity : new Date(b).getTime()
   // Avoid return NaN for a === b === Infinity
