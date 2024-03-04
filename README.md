@@ -211,9 +211,20 @@ testing the development version much easier.
 
 ### TypeScript
 
-TypeScript is most likely the future for us. It can be adopted gradually.
-At the moment we only have JSDoc comments which can provide type information
+We are starting to adopt TypeScript, so have a mixture of `.ts` and `.js` files.
+Vue single-file-components can use `<script lang="ts">` to enable TypeScript.
+There are also JSDoc comments in `.js` files which can provide type information
 in your IDE.
+
+> [!NOTE]
+> Vite performs transpilation of TypeScript but does not perform type checking.
+> It assumes type checking is taken care of by your IDE or a separate tool such
+> as `tsc --noEmit --watch`.
+
+Useful resources:
+- [Using Vue with TypeScript](https://vuejs.org/guide/typescript/overview.html)
+- [Vite features - TypeScript](https://vitejs.dev/guide/features#typescript)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
 
 ## How The Data Is Provisioned
 
