@@ -18,6 +18,7 @@
 // TODO: make it configurable
 const PORT = 3000
 
+/* eslint-disable @typescript-eslint/no-var-requires */
 const userProfile = require('./json/userprofile.json')
 const graphql = require('./graphql.cjs')
 const websockets = require('./websockets.cjs')

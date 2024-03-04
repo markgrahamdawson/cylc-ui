@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { isArray } = require('lodash')
 const graphql = require('./graphql.cjs')
 

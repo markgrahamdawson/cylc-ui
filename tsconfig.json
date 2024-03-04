@@ -15,8 +15,6 @@
 
         "allowJs": true,
 
-        "noUnusedLocals": true,
-
         // Vue recommended settings:
         "isolatedModules": true,
         "strict": true
@@ -26,6 +24,9 @@
         // "moduleResolution": "node"
     },
     "watchOptions": {
-        "excludeFiles": ["**/node_modules"]
+        "excludeDirectories": [
+            "**/node_modules",
+            "dist"
+        ]
     }
 }

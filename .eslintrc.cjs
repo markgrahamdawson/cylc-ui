@@ -49,6 +49,22 @@ module.exports = {
     'template-curly-spacing': [
       'off'
     ],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        vars: 'all',
+        args: 'none',
+      }
+    ],
+    '@typescript-eslint/no-var-requires': [
+      'error',
+      {
+        allow: [
+          '.*\\.cjs',
+          '.*\\.json',
+        ],
+      }
+    ],
     'vue/multi-word-component-names': [
       'off'
     ],
@@ -66,9 +82,6 @@ module.exports = {
     ],
     'cypress/unsafe-to-chain-command': [
       'off'
-    ],
-    '@typescript-eslint/no-unused-vars': [
-      'off' // handled by typescript itself
     ],
   },
 }

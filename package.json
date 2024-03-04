@@ -21,7 +21,8 @@
     "test:component": "cypress open --component",
     "test:e2e": "yarn run serve e2e:open",
     "test:unit": "vitest",
-    "test": "vitest run && yarn run serve cy:run"
+    "test": "vitest run && yarn run serve cy:run",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@apollo/client": "3.9.4",

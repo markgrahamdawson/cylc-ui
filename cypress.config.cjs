@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { defineConfig } = require('cypress')
 const vitePreprocessor = require('cypress-vite')
 const path = require('path')
