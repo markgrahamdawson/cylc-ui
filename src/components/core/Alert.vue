@@ -38,11 +38,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </v-snackbar>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mdiClose } from '@mdi/js'
 import { mapActions, mapState } from 'vuex'
 
-export default {
+export default defineComponent({
   name: 'Alert',
 
   computed: {
@@ -62,5 +63,5 @@ export default {
   icons: {
     mdiClose
   }
-}
+})
 </script>

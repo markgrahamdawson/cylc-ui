@@ -76,7 +76,7 @@ const props = defineProps({
   /**
    * All possible view component classes that can be rendered
    *
-   * @type {Map<string, import('@/views/views.js').CylcView>}
+   * @type {Map<string, import('@/views/views').CylcView>}
    */
   allViews: {
     type: Map,

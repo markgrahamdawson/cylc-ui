@@ -15,40 +15,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { type Tokens } from '@/utils/uid'
+
 /* Logic for filtering tasks. */
+
+interface Node {
+  node: {
+    state: string
+  }
+  tokens: Tokens
+}
 
 /**
  * Return true if the node ID matches the given ID, or if no ID is given.
- *
- * @param {Object} node
- * @param {?string} id
- * @return {boolean}
  */
-export function matchID (node, id) {
-  return !id?.trim() || node.tokens.relativeID.includes(id)
+export function matchID (node: Node, id?: string): boolean {
+  return !id?.trim() || node.tokens.relativeID!.includes(id)
 }
 
 /**
  * Return true if the given list of states includes the node state, or if
  * if the list is empty.
- *
- * @param {Object} node
- * @param {?string[]} states
- * @returns {boolean}
  */
-export function matchState (node, states) {
+export function matchState (node: Node, states?: string[]): boolean {
   return !states?.length || states.includes(node.node.state)
 }
 
 /**
  * Return true if a node matches the specified id/state filter.
- *
- * @export
- * @param {Object} node
- * @param {?string} id
- * @param {?string[]} states
- * @return {boolean}
  */
-export function matchNode (node, id, states) {
+export function matchNode (node: Node, id?: string, states?: string[]): boolean {
   return matchID(node, id) && matchState(node, states)
 }

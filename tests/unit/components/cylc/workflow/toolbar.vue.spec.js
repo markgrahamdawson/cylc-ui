@@ -37,7 +37,7 @@ describe('Workspace toolbar component', () => {
         plugins: [store, createVuetify(), CylcObjectPlugin],
       },
       props: {
-        views: [],
+        views: new Map(),
         workflowName: 'strewth',
       },
     })

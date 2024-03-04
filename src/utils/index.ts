@@ -15,17 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { watch } from 'vue'
+import {
+  watch,
+  type WatchOptions,
+  type WatchSource,
+} from 'vue'
 import { i18n } from '@/i18n'
 
 /**
  * i18n-enabled operation, to get the title respecting the locale used
  * in the application settings.
- * @param {string} key - i18n key
- * @param {Object} params - optional object key=value used in the i18n message
- * @returns {string}
+ * @param key - i18n key
+ * @param params - optional object key=value used in the i18n message
  */
-export const getPageTitle = (key, params = {}) => {
+export function getPageTitle (key: string, params = {}): string {
   return `${i18n.global.t('App.name')} | ${i18n.global.t(key, params)}`
 }
 
@@ -33,12 +36,12 @@ export const getPageTitle = (key, params = {}) => {
  * Watch source until it is truthy, then call the callback (and stop watching).
  *
  * Immediate by default.
- *
- * @param {import('vue').WatchSource} source
- * @param {import('vue').WatchCallback} callback
- * @param {import('vue').WatchOptions?} options
  */
-export const when = (source, callback, options = {}) => {
+export function when (
+  source: WatchSource<boolean>,
+  callback: () => void,
+  options: WatchOptions = {}
+): void {
   const unwatch = watch(
     source,
     (ready) => {

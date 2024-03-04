@@ -24,7 +24,7 @@ type Obj = string | Record<string, string>
  */
 type SortedIndexByComparator = (leftObject: Obj, leftValue: string, rightObject: Obj, rightValue: string) => number
 
-type SortedIndexOptions = {
+interface SortedIndexOptions {
   comparator?: SortedIndexByComparator
   reverse?: boolean
 }
@@ -46,11 +46,6 @@ export const DEFAULT_COMPARATOR = (left: string, right: string): number => {
 }
 
 /**
- * Declare function used in sortedIndexBy for creating the iteratee.
- */
-type SortedIndexByIteratee = (value: string | Record<string, string>) => string
-
-/**
  * Given a list of elements, and a value to be added to the list, we
  * perform a simple binary search of the list to determine the next
  * index where the value can be inserted, so that the list remains
@@ -69,12 +64,19 @@ type SortedIndexByIteratee = (value: string | Record<string, string>) => string
  * @param comparator - function used to compare the newValue with otherValues in the list
  * @return sorted index
  */
-export function sortedIndexBy (array: Obj[], value: Obj, iteratee: SortedIndexByIteratee, options: SortedIndexOptions = {}): number {
+export function sortedIndexBy (
+  array: Obj[],
+  value: Obj,
+  iteratee: (value: Obj) => string,
+  options: SortedIndexOptions = {}
+): number {
   if (array.length === 0) {
     return 0
   }
   // If given a function, use it. Otherwise, simply use locale sort with numeric enabled
-  const comparatorFunction = options.comparator || ((leftObject, leftValue, rightObject, rightValue) => DEFAULT_COMPARATOR(leftValue, rightValue))
+  const comparatorFunction: SortedIndexByComparator = options.comparator || (
+    (leftObject, leftValue, rightObject, rightValue) => DEFAULT_COMPARATOR(leftValue, rightValue)
+  )
   let low = 0
   let high = array.length
 

@@ -15,33 +15,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * @param {WorkflowGScanNode|WorkflowNamePartGScanNode} workflow
- * @param {?string} name - name filter
- * @returns {boolean}
- */
-export function filterByName (workflow, name) {
+import { type Tokens } from '@/utils/uid'
+
+interface WorkflowNode {
+  node: {
+    status: string
+    stateTotals: Record<string, number>
+  }
+  tokens: Tokens
+}
+
+export function filterByName (workflow: WorkflowNode, name: string): boolean {
   return !name || workflow.tokens.workflow.toLowerCase().includes(name.toLowerCase())
 }
 
 /**
  * @private
- * @param {Object=} stateTotals - object with the keys being states, and values the count
- * @return {string[]}
+ * @param stateTotals - object with the keys being states, and values the count
  */
-function getWorkflowStates (stateTotals) {
+function getWorkflowStates (stateTotals: Record<string, number>): string[] {
   return !stateTotals
     ? []
     : Object.keys(stateTotals).filter((state) => stateTotals[state] > 0)
 }
 
-/**
- * @param {WorkflowGScanNode|WorkflowNamePartGScanNode} workflow
- * @param {string[]} workflowStates
- * @param {string[]} taskStates
- * @returns {boolean}
- */
-export function filterByState (workflow, workflowStates, taskStates) {
+export function filterByState (
+  workflow: WorkflowNode,
+  workflowStates: string[],
+  taskStates: string[]
+): boolean {
   // workflow states
   if (
     workflowStates.length && !workflowStates.includes(workflow.node.status)

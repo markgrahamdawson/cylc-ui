@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { TREE, useDefaultView } from '@/views/views.js'
+import { TREE, useDefaultView } from '@/views/views'
 
 describe('useDefaultView composable', () => {
   it(`returns the ${TREE} view if not set in localStorage`, () => {

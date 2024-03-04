@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </v-defaults-provider>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useJobTheme, useReducedAnimation } from '@/composables/localStorage'

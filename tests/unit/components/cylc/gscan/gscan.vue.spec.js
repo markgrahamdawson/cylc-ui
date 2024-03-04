@@ -29,7 +29,7 @@ import TaskState from '@/model/TaskState.model'
 import {
   getWorkflowTreeSortValue,
   sortedWorkflowTree
-} from '@/components/cylc/gscan/sort.js'
+} from '@/components/cylc/gscan/sort'
 
 import {
   TEST_TREE,

@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <script>
 import { ref } from 'vue'
 import { onBeforeRouteUpdate } from 'vue-router'
-import { allViews } from '@/views/views.js'
+import { allViews } from '@/views/views'
 import { getPageTitle } from '@/utils/index'
 import graphqlMixin from '@/mixins/graphql'
 import subscriptionMixin from '@/mixins/subscription'

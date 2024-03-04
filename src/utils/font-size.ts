@@ -23,10 +23,10 @@ export const INCREMENT = 2
 /**
  * Sets the font-size to a value.
  *
- * @param {?string} size - Value with units given (doesn't matter which unit).
- * If null then reset to default.
+ * @param size - Value with units given (doesn't matter which unit).
+ * If empty string then reset to default.
  */
-export function resetFontSize (size = null) {
+export function resetFontSize (size: string = '') {
   localStorage.fontSize = size
   document.documentElement.style.fontSize = size
 }
@@ -42,9 +42,9 @@ export function increaseFontSize () {
 /**
  * Get HTML element (computed) font size.
  *
- * @returns {number} current font size in px
+ * @returns current font size in px
  */
-export function getCurrentFontSize () {
+export function getCurrentFontSize (): number {
   const fontSize = window.getComputedStyle(document.documentElement).fontSize // px
   return parseFloat(fontSize)
 }

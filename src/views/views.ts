@@ -15,7 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { defineAsyncComponent } from 'vue'
+import {
+  defineAsyncComponent,
+  type Component,
+} from 'vue'
 import { useLocalStorage } from '@vueuse/core'
 import {
   mdiChartLine,
@@ -36,11 +39,12 @@ const AnalysisView = defineAsyncComponent(() => import('@/views/Analysis.vue'))
 const GanttView = defineAsyncComponent(() => import('@/views/Gantt.vue'))
 const SimpleTreeView = defineAsyncComponent(() => import('@/views/SimpleTree.vue'))
 
-/**
- * @typedef {Object} CylcView
- * @property {import('vue').DefineComponent} component - the dynamic async Vue component
- * @property {string} icon - the icon for this view
- */
+export interface CylcView {
+  /** The dynamic async Vue component */
+  component: Component
+  /** The icon for this view */
+  icon: string
+}
 
 export const TREE = 'Tree'
 
@@ -52,10 +56,8 @@ export const TREE = 'Tree'
  *
  * Note for peformance reasons this should not be made reactive as they are
  * already Vue components.
- *
- * @type {Map<string, CylcView>}
  */
-export const allViews = new Map([
+export const allViews: Map<string, CylcView> = new Map([
   [TREE, { component: TreeView, icon: mdiFileTree }],
   ['Table', { component: TableView, icon: mdiTable }],
   ['Graph', { component: GraphView, icon: mdiGraph }],
