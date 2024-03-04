@@ -15,13 +15,18 @@
 
         "allowJs": true,
 
-        // Vue recommended settings:
-        "isolatedModules": true,
-        "strict": true
+        // Disable errors about implicit any during migration to TS:
+        "noImplicitAny": false,
 
-        // // if using webpack 2+ or rollup, to leverage tree shaking:
-        // "module": "es2015",
-        // "moduleResolution": "node"
+        // Vue/Vite recommended settings:
+        "isolatedModules": true,
+        "strict": true,
+        "types": [
+            "vite/client"
+        ],
+
+        "module": "es2020",
+        "moduleResolution": "node"
     },
     "watchOptions": {
         "excludeDirectories": [
