@@ -218,8 +218,9 @@ in your IDE.
 
 > [!NOTE]
 > Vite performs transpilation of TypeScript but does not perform type checking.
-> It assumes type checking is taken care of by your IDE or a separate tool such
-> as `tsc --noEmit --watch`.
+> It assumes type checking is taken care of by your IDE or a tool such as
+> [`vue-tsc`](https://github.com/vuejs/language-tools/tree/master/packages/tsc)
+> e.g. `vue-tsc --noEmit --watch`.
 
 Useful resources:
 - [Using Vue with TypeScript](https://vuejs.org/guide/typescript/overview.html)

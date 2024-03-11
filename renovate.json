@@ -7,9 +7,16 @@
   "automergeStrategy": "squash",
   "packageRules": [
     {
-      "matchPackageNames": ["typescript"],
-      "matchPackagePatterns": ["^@types/"],
-      "automerge": true
+      "groupName": "typescript packages",
+      "matchPackageNames": [
+        "typescript",
+        "vue-tsc"
+      ],
+      "matchPackagePatterns": [
+        "^@types/"
+      ],
+      "automerge": true,
+      "schedule": ["on saturday"]
     },
     {
       "matchPackageNames": ["yarn"],

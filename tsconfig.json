@@ -15,8 +15,9 @@
 
         "allowJs": true,
 
-        // Disable errors about implicit any during migration to TS:
+        // Disable errors about implicit stuff during migration to TS:
         "noImplicitAny": false,
+        "noImplicitReturns": false,
 
         // Vue/Vite recommended settings:
         "isolatedModules": true,
@@ -25,7 +26,10 @@
             "vite/client"
         ],
 
-        "module": "es2020",
+        "target": "ES2020",
+        "skipLibCheck": true,
+
+        "module": "ES2020",
         "moduleResolution": "node"
     },
     "watchOptions": {

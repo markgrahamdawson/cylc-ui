@@ -65,6 +65,18 @@ module.exports = {
         ],
       }
     ],
+    '@typescript-eslint/no-explicit-any': [
+      'off', // Off while we migrate to TypeScript
+    ],
+    'no-use-before-define': [
+      'off' // Handled by @typescript-eslint below
+    ],
+    '@typescript-eslint/no-use-before-define': [
+      'error',
+      {
+        functions: false,
+      }
+    ],
     'vue/multi-word-component-names': [
       'off'
     ],

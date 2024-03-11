@@ -22,7 +22,7 @@
     "test:e2e": "yarn run serve e2e:open",
     "test:unit": "vitest",
     "test": "vitest run && yarn run serve cy:run",
-    "type-check": "tsc --noEmit"
+    "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@apollo/client": "3.9.4",
@@ -91,7 +91,8 @@
     "vite-plugin-eslint": "1.8.1",
     "vite-plugin-istanbul": "6.0.0",
     "vite-plugin-vuetify": "2.0.3",
-    "vitest": "1.4.0"
+    "vitest": "1.4.0",
+    "vue-tsc": "2.0.6"
   },
   "peerDependenciesMeta": {
     "react": {
