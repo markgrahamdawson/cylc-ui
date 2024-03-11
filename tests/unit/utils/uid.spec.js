@@ -23,7 +23,7 @@ describe('Universal ID (UID)', () => {
       // full ID
       expect(
         Object.assign({}, new Tokens('~user/workflow//cycle/task/01'))
-      ).to.deep.equal({
+      ).toEqual({
         user: 'user',
         workflow: 'workflow',
         cycle: 'cycle',
@@ -39,7 +39,7 @@ describe('Universal ID (UID)', () => {
       // workflow ID fragment
       expect(
         Object.assign({}, new Tokens('~user'))
-      ).to.deep.equal({
+      ).toEqual({
         user: 'user',
         workflow: undefined,
         cycle: undefined,
@@ -55,7 +55,7 @@ describe('Universal ID (UID)', () => {
       // relative ID fragment
       expect(
         Object.assign({}, new Tokens('cycle', true))
-      ).to.deep.equal({
+      ).toEqual({
         user: undefined,
         workflow: undefined,
         cycle: 'cycle',
@@ -73,7 +73,7 @@ describe('Universal ID (UID)', () => {
       // namespaces (i.e. task/family definitions)
       expect(
         Object.assign({}, new Tokens('$namespace|foo', true))
-      ).to.deep.equal({
+      ).toEqual({
         user: undefined,
         workflow: undefined,
         cycle: undefined,
@@ -89,7 +89,7 @@ describe('Universal ID (UID)', () => {
       // edges
       expect(
         Object.assign({}, new Tokens('$edge|1/a|1/b', true))
-      ).to.deep.equal({
+      ).toEqual({
         user: undefined,
         workflow: undefined,
         cycle: undefined,
@@ -112,15 +112,11 @@ describe('Universal ID (UID)', () => {
       expect(a.job).to.equal('01')
     })
 
-    it('should be mutable via the set method', () => {
+    it('should clone', () => {
       const a = new Tokens('w//c')
-      const b = a.clone()
-      b.set({ workflow: 'x', task: 't' })
-
+      const b = a.clone({ workflow: 'x', task: 't' })
       // "a" should be unchanged
-      expect(
-        Object.assign({}, a)
-      ).to.deep.equal({
+      expect(Object.assign({}, a)).toEqual({
         user: undefined,
         workflow: 'w',
         cycle: 'c',
@@ -134,9 +130,7 @@ describe('Universal ID (UID)', () => {
       })
 
       // "b" should be updated
-      expect(
-        Object.assign({}, b)
-      ).to.deep.equal({
+      expect(Object.assign({}, b)).toEqual({
         user: undefined,
         workflow: 'x',
         cycle: 'c',
@@ -150,32 +144,13 @@ describe('Universal ID (UID)', () => {
       })
 
       // should be able to wipe tokens using "undefined"
-      b.set({ task: undefined })
-      expect(b.task).to.equal(undefined)
-    })
-
-    it('should clone and set in the same operation', () => {
-      const a = new Tokens('w//c')
-      const b = a.clone({ cycle: 'd', task: 't' })
-      expect(
-        Object.assign({}, b)
-      ).to.deep.equal({
-        user: undefined,
-        workflow: 'w',
-        cycle: 'd',
-        task: 't',
-        job: undefined,
-        id: 'w//d/t',
-        workflowID: 'w',
-        relativeID: 'd/t',
-        namespace: undefined,
-        edge: undefined
-      })
+      const c = b.clone({ task: undefined })
+      expect(c.task).toBe(undefined)
     })
 
     it('should iterate hierarchical workflows', () => {
       const tokens = new Tokens('~u/a/b/c/d')
-      expect(tokens.workflowHierarchy()).to.deep.equal([
+      expect(tokens.workflowHierarchy()).toEqual([
         ['a', new Tokens('~u/a')],
         ['b', new Tokens('~u/a/b')],
         ['c', new Tokens('~u/a/b/c')],
@@ -215,7 +190,7 @@ describe('Universal ID (UID)', () => {
     it('should yield the tree to this token', () => {
       expect(
         new Tokens('~u/w1/w2/w3//c/t/01').tree()
-      ).to.deep.equal([
+      ).toEqual([
         [
           'user',
           'u',
@@ -255,7 +230,7 @@ describe('Universal ID (UID)', () => {
 
       expect(
         new Tokens('~u/w//c').tree()
-      ).to.deep.equal([
+      ).toEqual([
         [
           'user',
           'u',
@@ -275,7 +250,7 @@ describe('Universal ID (UID)', () => {
 
       expect(
         new Tokens('~u').tree()
-      ).to.deep.equal([
+      ).toEqual([
         [
           'user',
           'u',

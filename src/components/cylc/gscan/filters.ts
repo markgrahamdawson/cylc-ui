@@ -25,15 +25,15 @@ interface WorkflowNode {
   tokens: Tokens
 }
 
-export function filterByName (workflow: WorkflowNode, name: string): boolean {
-  return !name || workflow.tokens.workflow.toLowerCase().includes(name.toLowerCase())
+export function filterByName (workflow: WorkflowNode, name?: string): boolean {
+  return !name || workflow.tokens.workflow!.toLowerCase().includes(name.toLowerCase())
 }
 
 /**
  * @private
  * @param stateTotals - object with the keys being states, and values the count
  */
-function getWorkflowStates (stateTotals: Record<string, number>): string[] {
+function getWorkflowStates (stateTotals?: Record<string, number>): string[] {
   return !stateTotals
     ? []
     : Object.keys(stateTotals).filter((state) => stateTotals[state] > 0)

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) NIWA & British Crown (Met Office) & Contributors.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@
  * in the event they are changed in cylc-flow.
  */
 
-/* eslint-disable */
+/* eslint-disable no-useless-escape */
 
 const UNIVERSAL_ID = new RegExp(`
     (?=.)
@@ -121,10 +121,24 @@ const RELATIVE_ID = new RegExp(`
     $
 `.replace(/[\s\n\r]/g, ''))
 
-/* eslint-enable */
+/* eslint-enable no-useless-escape */
 
-function detokenise (tokens, workflow = true, relative = true) {
-  let parts = []
+interface TokenFields {
+  user?: string
+  workflow?: string
+  cycle?: string
+  task?: string
+  job?: string
+}
+
+type TokenKey = keyof TokenFields
+
+type TokenTree = [TokenKey | 'workflow-part', string, Tokens][]
+
+function detokenise (
+  tokens: Tokens, workflow: boolean = true, relative: boolean = true
+): string {
+  let parts: string[] = []
   let ret = ''
 
   if (workflow) {
@@ -159,7 +173,7 @@ function detokenise (tokens, workflow = true, relative = true) {
   return ret
 }
 
-class Tokens {
+export class Tokens implements TokenFields {
   /* Represents a Cylc UID.
    *
    * Provides the interfaces for parsing to and from string IDs.
@@ -184,29 +198,35 @@ class Tokens {
    *   tokens.relativeID  // the task part of the ID (the bit after the //)
    */
 
-  static KEYS = ['user', 'workflow', 'cycle', 'task', 'job']
+  static KEYS: readonly TokenKey[] = ['user', 'workflow', 'cycle', 'task', 'job']
+  static KEYS_LO_TO_HI: readonly TokenKey[] = [...Tokens.KEYS].reverse()
 
-  constructor (id, relative = false) {
-    let match
-    let user
-    let workflow
-    let cycle
-    let task
-    let job
+  user?: string
+  workflow?: string
+  cycle?: string
+  task?: string
+  job?: string
 
-    if (id === null) {
+  id!: string
+  workflowID!: string
+  relativeID!: string
+  namespace?: string
+  edge?: [Tokens, Tokens]
+
+  constructor (id: string, relative: boolean = false) {
+    if (id == null) {
       throw new Error(`Invalid ID ${id}`)
     }
+
+    let match: RegExpMatchArray | null = null
 
     // try to match relative ID (the leading // is implicit)
     if (relative) {
       match = `//${id}`.match(RELATIVE_ID)
       if (match) {
-        user = undefined
-        workflow = undefined
-        cycle = match[1]
-        task = match[3]
-        job = match[5]
+        this.cycle = match[1]
+        this.task = match[3]
+        this.job = match[5]
       }
     }
 
@@ -214,46 +234,30 @@ class Tokens {
     if (!match) {
       match = id.match(UNIVERSAL_ID)
       if (match) {
-        user = match[1]
-        workflow = match[3]
-        cycle = match[5]
-        task = match[7]
-        job = match[9]
+        this.user = match[1]
+        this.workflow = match[3]
+        this.cycle = match[5]
+        this.task = match[7]
+        this.job = match[9]
+      } else {
+        throw new Error(`Invalid ID ${id}`)
       }
     }
 
-    if (!match) {
-      throw new Error(`Invalid ID ${id}`)
-    }
-
-    // UID tokens
-    this.user = user
-    this.workflow = workflow
-    this.cycle = cycle
-    this.task = task
-    this.job = job
-
-    // derived properties
-    this.namespace = undefined
-    this.edge = undefined
-    this.id = undefined
-    this.workflowID = undefined
-    this.relativeID = undefined
-
-    // update derived properties
+    // set derived properties
     this.compute()
   }
 
-  compute () {
+  protected compute (): void {
     this.id = detokenise(this)
 
-    if (this.cycle && this.cycle.startsWith('$namespace|')) {
+    if (this.cycle?.startsWith('$namespace|')) {
       // this is a namespace definition
       this.namespace = this.cycle.replace('$namespace|', '')
       this.cycle = undefined
       this.task = undefined
       this.job = undefined
-    } else if (this.cycle && this.cycle.startsWith('$edge|')) {
+    } else if (this.cycle?.startsWith('$edge|')) {
       // this is an edge definition
       const [left, right] = this.id.replace(/.*\$edge\|/, '').split('|')
       this.edge = [new Tokens(left, true), new Tokens(right, true)]
@@ -266,70 +270,61 @@ class Tokens {
     this.relativeID = detokenise(this, false, true)
   }
 
-  set (fields) {
-    for (const [key, value] of Object.entries(fields)) {
-      if (Tokens.KEYS.indexOf(key) === -1) {
-        throw new Error(`Invalid key: ${key}`)
-      }
-      if (typeof value !== 'string' && typeof value !== 'undefined') {
-        throw new Error(`Invalid type for value: ${value}`)
-      }
-      this[key] = value
-    }
-    this.compute()
-  }
-
-  clone (fields = null) {
+  clone (fields?: TokenFields): Tokens {
     const ret = Object.create(
       Object.getPrototypeOf(this),
       Object.getOwnPropertyDescriptors(this)
     )
     if (fields) {
-      ret.set(fields)
+      for (const [key, value] of Object.entries(fields)) {
+        if (Tokens.KEYS.indexOf(key as TokenKey) === -1) {
+          throw new Error(`Invalid key: ${key}`)
+        }
+        if (typeof value !== 'string' && typeof value !== 'undefined') {
+          throw new Error(`Invalid type for value: ${value}`)
+        }
+        ret[key] = value
+      }
+      ret.compute()
     }
     return ret
   }
 
-  workflowHierarchy () {
-    const hier = []
-    const tokensList = []
-    let tokens
+  workflowHierarchy (): [string, Tokens][] {
+    if (!this.workflow) {
+      throw new Error('Cannot get workflow hierarchy for a relative ID')
+    }
+    const hier: string[] = []
+    const tokensList: [string, Tokens][] = []
     for (const part of this.workflow.split('/')) {
       // for each level of the hierarchy
       hier.push(part)
       // copy these tokens
-      tokens = this.clone()
-      // amending the workflow ID to match its level in the hierarchy
-      tokens.set({
+      const tokens = this.clone({
+        // amending the workflow ID to match its level in the hierarchy
         workflow: hier.join('/'),
         // wipe the relative tokens in-case they were set
         cycle: undefined,
         task: undefined,
-        job: undefined
+        job: undefined,
       })
       tokensList.push([part, tokens])
     }
     return tokensList
   }
 
-  lowestToken () {
-    let key
-    for (let ind = Tokens.KEYS.length; ind >= 0; ind--) {
-      key = Tokens.KEYS[ind]
-      if (this[key]) {
-        return key
-      }
-    }
+  lowestToken (): TokenKey {
+    return Tokens.KEYS_LO_TO_HI.find(key => this[key]) as TokenKey
   }
 
-  tree () {
-    const ret = []
+  tree (): TokenTree {
+    const ret: TokenTree = []
     if (this.user) {
       let tokens = new Tokens(`~${this.user}`)
       ret.push(['user', this.user, tokens])
       if (this.workflow) {
         const parts = this.workflow.split('/')
-        const last = parts.pop()
+        const last = parts.pop() as string
         for (const part of parts) {
           if (!tokens.workflow) {
             tokens = tokens.clone({ workflow: part })
@@ -361,5 +356,3 @@ class Tokens {
     return ret
   }
 }
-
-export { Tokens }

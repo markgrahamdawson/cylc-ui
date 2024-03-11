@@ -30,7 +30,7 @@ interface Node {
  * Return true if the node ID matches the given ID, or if no ID is given.
  */
 export function matchID (node: Node, id?: string): boolean {
-  return !id?.trim() || node.tokens.relativeID!.includes(id)
+  return !id?.trim() || node.tokens.relativeID.includes(id)
 }
 
 /**
