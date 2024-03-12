@@ -75,6 +75,7 @@ module.exports = {
       'error',
       {
         functions: false,
+        variables: false,
       }
     ],
     'vue/multi-word-component-names': [
