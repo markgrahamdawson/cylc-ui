@@ -16,21 +16,21 @@
  */
 
 import { WorkflowState } from '@/model/WorkflowState.model'
-import TaskState from '@/model/TaskState.model'
+import { TaskState } from '@/model/TaskState.model'
 import { Tokens } from '@/utils/uid'
 
 const RUNNING_STATE_TOTALS = {
-  [TaskState.RUNNING.name]: 1,
-  [TaskState.SUBMITTED.name]: 0,
+  [TaskState.RUNNING]: 1,
+  [TaskState.SUBMITTED]: 0,
 }
 
 const SUBMITTED_STATE_TOTALS = {
-  [TaskState.RUNNING.name]: 0,
-  [TaskState.SUBMITTED.name]: 1,
+  [TaskState.RUNNING]: 0,
+  [TaskState.SUBMITTED]: 1,
 }
 
 const SUBMIT_FAILED_STATE_TOTALS = {
-  [TaskState.SUBMIT_FAILED.name]: 1,
+  [TaskState.SUBMIT_FAILED]: 1,
 }
 
 export const TEST_TREE = {
@@ -52,7 +52,7 @@ export const TEST_TREE = {
               type: 'workflow',
               tokens: new Tokens('~u/a/x1'),
               node: {
-                status: WorkflowState.STOPPED.name,
+                status: WorkflowState.STOPPED,
                 stateTotals: SUBMIT_FAILED_STATE_TOTALS,
                 latestStateTasks: [],
               }
@@ -63,7 +63,7 @@ export const TEST_TREE = {
               type: 'workflow',
               tokens: new Tokens('~u/a/x2'),
               node: {
-                status: WorkflowState.STOPPED.name,
+                status: WorkflowState.STOPPED,
                 latestStateTasks: [],
               }
             }
@@ -75,7 +75,7 @@ export const TEST_TREE = {
           type: 'workflow',
           tokens: new Tokens('~u/b'),
           node: {
-            status: WorkflowState.STOPPING.name,
+            status: WorkflowState.STOPPING,
             stateTotals: RUNNING_STATE_TOTALS,
             latestStateTasks: [],
           }
@@ -86,7 +86,7 @@ export const TEST_TREE = {
           type: 'workflow',
           tokens: new Tokens('~u/c'),
           node: {
-            status: WorkflowState.RUNNING.name,
+            status: WorkflowState.RUNNING,
             stateTotals: SUBMITTED_STATE_TOTALS,
             latestStateTasks: [],
           }

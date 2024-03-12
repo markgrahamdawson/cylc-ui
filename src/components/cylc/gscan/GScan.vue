@@ -227,7 +227,7 @@ export default {
    * @type {{ [name: string]: string[] }}
    */
   allStates: {
-    'workflow state': WorkflowState.enumValues.map(x => x.name),
+    'workflow state': Object.values(WorkflowState),
     'task state': TaskStateNames,
   },
 }

@@ -14,8 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import TaskState from '@/model/TaskState.model'
-import JobState from '@/model/JobState.model'
+import { TaskState } from '@/model/TaskState.model'
+import { JobState } from '@/model/JobState.model'
 import { Tokens } from '@/utils/uid'
 
 const tk = {
@@ -32,7 +32,7 @@ export const simpleTableTasks = [
       tokens: tk.taskA,
       node: {
         id: tk.taskA.id,
-        state: TaskState.RUNNING.name,
+        state: TaskState.RUNNING,
         task: {
           meanElapsedTime: 2,
         },
@@ -49,7 +49,7 @@ export const simpleTableTasks = [
             submittedTime: new Date().toISOString(),
             startedTime: new Date().toISOString(),
             finishedTime: null,
-            state: JobState.RUNNING.name
+            state: JobState.RUNNING
           },
           children: []
         }
@@ -66,7 +66,7 @@ export const simpleTableTasks = [
         submittedTime: new Date().toISOString(),
         startedTime: new Date().toISOString(),
         finishedTime: null,
-        state: JobState.RUNNING.name
+        state: JobState.RUNNING
       },
       children: []
     },
@@ -79,7 +79,7 @@ export const simpleTableTasks = [
       tokens: tk.taskB,
       node: {
         id: tk.taskB.id,
-        state: TaskState.WAITING.name,
+        state: TaskState.WAITING,
         name: 'taskB',
       },
       children: []
@@ -94,7 +94,7 @@ export const simpleTableTasks = [
       tokens: tk.taskC,
       node: {
         id: tk.taskC.id,
-        state: TaskState.SUBMITTED.name,
+        state: TaskState.SUBMITTED,
         name: 'taskC',
       },
       children: []

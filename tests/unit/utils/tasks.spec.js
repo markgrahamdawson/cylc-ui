@@ -15,48 +15,53 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import TaskState from '@/model/TaskState.model'
+import { TaskState } from '@/model/TaskState.model'
 import { dtMean, extractGroupState, latestJob, formatDuration, jobMessageOutputs } from '@/utils/tasks'
 
 describe('tasks', () => {
   describe('extractGroupState', () => {
-    it('should return the correct state for the node groups when not stopped', () => {
-      [
-        [
-          TaskState.FAILED.name, // expected
-          [TaskState.WAITING, TaskState.FAILED].map((state) => state.name)], // childStates
-        [
-          TaskState.WAITING.name,
-          [TaskState.WAITING].map((state) => state.name)],
-        [
-          TaskState.RUNNING.name,
-          [TaskState.SUBMITTED, TaskState.RUNNING].map((state) => state.name)]
-      ].forEach((val) => {
-        const groupState = extractGroupState(val[1], false)
-        expect(groupState).to.equal(val[0])
-      })
-    })
-
-    it('should return the correct state for the node groups when stopped', () => {
-      [
-        [
-          TaskState.RUNNING.name, // expected
-          [TaskState.WAITING, TaskState.SUBMITTED, TaskState.RUNNING].map((state) => state.name)], // childStates
-        [
-          TaskState.SUCCEEDED.name,
-          [TaskState.SUCCEEDED].map((state) => state.name)],
-        [
-          TaskState.RUNNING.name,
-          [TaskState.SUBMITTED, TaskState.RUNNING, TaskState.EXPIRED].map((state) => state.name)]
-      ].forEach((val) => {
-        const groupState = extractGroupState(val[1], true)
-        expect(groupState).to.equal(val[0])
-      })
-    })
-
-    it('should return empty when no states provided', () => {
-      expect(extractGroupState([])).to.equal('')
-    })
+    it.each([
+      {
+        childStates: [TaskState.WAITING, TaskState.FAILED],
+        stopped: false,
+        expected: TaskState.FAILED
+      },
+      {
+        childStates: [TaskState.WAITING],
+        stopped: false,
+        expected: TaskState.WAITING
+      },
+      {
+        childStates: [TaskState.SUBMITTED, TaskState.RUNNING],
+        stopped: false,
+        expected: TaskState.RUNNING
+      },
+      {
+        childStates: [TaskState.WAITING, TaskState.SUBMITTED, TaskState.RUNNING],
+        stopped: true,
+        expected: TaskState.RUNNING
+      },
+      {
+        childStates: [TaskState.SUCCEEDED],
+        stopped: true,
+        expected: TaskState.SUCCEEDED
+      },
+      {
+        childStates: [TaskState.SUBMITTED, TaskState.RUNNING, TaskState.EXPIRED],
+        stopped: true,
+        expected: TaskState.RUNNING
+      },
+      {
+        childStates: [],
+        expected: ''
+      }
+    ])(
+      'extractGroupState($childStates, stopped = $stopped) -> $expected',
+      ({ childStates, stopped, expected }) => {
+        const groupState = extractGroupState(childStates, stopped)
+        expect(groupState).to.equal(expected)
+      }
+    )
   })
 
   describe.each([

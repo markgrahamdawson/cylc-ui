@@ -20,7 +20,7 @@ import sinon from 'sinon'
 import { toRaw } from 'vue'
 import { createStore } from 'vuex'
 import { Alert } from '@/model/Alert.model'
-import ViewState from '@/model/ViewState.model'
+import { ViewState } from '@/model/ViewState.model'
 import storeOptions from '@/store/options'
 import subscriptionMixin from '@/mixins/subscription'
 

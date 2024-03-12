@@ -16,7 +16,7 @@
  */
 
 import { toRaw } from 'vue'
-import ViewState from '@/model/ViewState.model'
+import { ViewState } from '@/model/ViewState.model'
 import { Alert } from '@/model/Alert.model'
 
 /**
@@ -77,7 +77,7 @@ class Subscription {
         subscriber.setAlert(new Alert(context.message, 'error'))
         if (this.debug) {
           // eslint-disable-next-line no-console
-          console.debug(`Subscription error: ${context.message}`, toRaw(viewState), context)
+          console.debug(`Subscription error: ${context.message}`, ViewState[toRaw(viewState)], context)
         }
       })
     }

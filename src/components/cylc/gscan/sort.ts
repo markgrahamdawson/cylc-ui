@@ -18,7 +18,7 @@
 import {
   sortedIndexBy
 } from '@/components/cylc/common/sort'
-import { WorkflowState, WorkflowStateOrder } from '@/model/WorkflowState.model'
+import { WorkflowState, getWorkflowStateOrder } from '@/model/WorkflowState.model'
 
 /**
  * Return an integer suitable for alphabetical sorting of workflow states.
@@ -28,14 +28,14 @@ import { WorkflowState, WorkflowStateOrder } from '@/model/WorkflowState.model'
  */
 export function getWorkflowTreeSortValue (node) {
   if (node.type === 'workflow') {
-    return WorkflowStateOrder.get(node.node.status)
+    return getWorkflowStateOrder(node.node.status)
   }
   let ret = 9
   let temp = 9
   let item
   const stack = [...node.children]
   while (
-    ret > WorkflowStateOrder.get(WorkflowState.RUNNING.name) &&
+    ret > getWorkflowStateOrder(WorkflowState.RUNNING) &&
     stack.length
   ) {
     // NOTE: if one workflow is running (top sort order) then we don't
@@ -44,7 +44,7 @@ export function getWorkflowTreeSortValue (node) {
     if (item.type === 'workflow-part') {
       stack.push(...item.children)
     } else if (item.type === 'workflow') {
-      temp = WorkflowStateOrder.get(item.node.status)
+      temp = getWorkflowStateOrder(item.node.status)
       if (temp < ret) {
         ret = temp
       }

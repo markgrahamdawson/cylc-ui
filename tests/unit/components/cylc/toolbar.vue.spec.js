@@ -19,7 +19,7 @@ import { mount } from '@vue/test-utils'
 import { createVuetify } from 'vuetify'
 import { createStore } from 'vuex'
 import Toolbar from '@/components/cylc/Toolbar.vue'
-import WorkflowState from '@/model/WorkflowState.model'
+import { WorkflowState } from '@/model/WorkflowState.model'
 import storeOptions from '@/store/options'
 
 describe('Toolbar component', () => {
@@ -45,7 +45,7 @@ describe('Toolbar component', () => {
       {
         id: 'user/id',
         name: 'test',
-        status: WorkflowState.RUNNING.name
+        status: WorkflowState.RUNNING
       }
     ]
     store.state.workflows.workflowName = 'test'

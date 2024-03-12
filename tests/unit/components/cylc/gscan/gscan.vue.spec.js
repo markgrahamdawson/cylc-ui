@@ -23,9 +23,9 @@ import GScan from '@/components/cylc/gscan/GScan.vue'
 import CylcObjectPlugin from '@/components/cylc/cylcObject/plugin'
 import {
   WorkflowState,
-  WorkflowStateOrder
+  getWorkflowStateOrder
 } from '@/model/WorkflowState.model'
-import TaskState from '@/model/TaskState.model'
+import { TaskState } from '@/model/TaskState.model'
 import {
   getWorkflowTreeSortValue,
   sortedWorkflowTree
@@ -58,15 +58,15 @@ describe('GScan component', () => {
   describe('Sorting', () => {
     it('sets workflow sort order by status', () => {
       // for each worflow state ...
-      for (const workflowState of WorkflowState) {
+      for (const workflowState of Object.values(WorkflowState)) {
         // it should associate a workflow with the correct sort order
         expect(
           getWorkflowTreeSortValue({
             type: 'workflow',
-            node: { status: workflowState.name },
+            node: { status: workflowState },
             children: []
           })
-        ).to.equal(WorkflowStateOrder.get(workflowState.name))
+        ).to.equal(getWorkflowStateOrder(workflowState))
 
         // it should associate a nested workflow with the correct sort order
         expect(
@@ -76,7 +76,7 @@ describe('GScan component', () => {
             children: [
               {
                 type: 'workflow',
-                node: { status: workflowState.name },
+                node: { status: workflowState },
                 children: []
               },
               {
@@ -87,7 +87,7 @@ describe('GScan component', () => {
               }
             ]
           })
-        ).to.equal(WorkflowStateOrder.get(workflowState.name))
+        ).to.equal(getWorkflowStateOrder(workflowState))
       }
     })
 
@@ -135,7 +135,7 @@ describe('GScan component', () => {
       const filteredOutNodesCache = new Map()
       // filter for all workflow states
       await wrapper.setData({
-        filters: { 'workflow state': WorkflowStateOrder.keys() },
+        filters: { 'workflow state': Object.values(WorkflowState) },
       })
       filterNodes(wrapper, filteredOutNodesCache)
       expect(getIDMap(filteredOutNodesCache)).toEqual({
@@ -152,7 +152,7 @@ describe('GScan component', () => {
       const filteredOutNodesCache = new Map()
 
       await wrapper.setData({
-        filters: { 'workflow state': [WorkflowState.RUNNING.name] },
+        filters: { 'workflow state': [WorkflowState.RUNNING] },
       })
       filterNodes(wrapper, filteredOutNodesCache)
       expect(getIDMap(filteredOutNodesCache)).toEqual({
@@ -166,8 +166,8 @@ describe('GScan component', () => {
       await wrapper.setData({
         filters: {
           'workflow state': [
-            WorkflowState.STOPPING.name,
-            WorkflowState.STOPPED.name,
+            WorkflowState.STOPPING,
+            WorkflowState.STOPPED,
           ]
         },
       })
@@ -211,7 +211,7 @@ describe('GScan component', () => {
       const filteredOutNodesCache = new Map()
 
       await wrapper.setData({
-        filters: { 'task state': [TaskState.RUNNING.name] }
+        filters: { 'task state': [TaskState.RUNNING] }
       })
       filterNodes(wrapper, filteredOutNodesCache)
       expect(getIDMap(filteredOutNodesCache)).toEqual({
@@ -223,7 +223,7 @@ describe('GScan component', () => {
       })
 
       await wrapper.setData({
-        filters: { 'task state': [TaskState.SUBMITTED.name] }
+        filters: { 'task state': [TaskState.SUBMITTED] }
       })
       filterNodes(wrapper, filteredOutNodesCache)
       expect(getIDMap(filteredOutNodesCache)).toEqual({
@@ -242,8 +242,8 @@ describe('GScan component', () => {
       await wrapper.setData({
         searchWorkflows: 'a',
         filters: {
-          'workflow state': [WorkflowState.STOPPED.name],
-          'task state': [TaskState.SUBMIT_FAILED.name],
+          'workflow state': [WorkflowState.STOPPED],
+          'task state': [TaskState.SUBMIT_FAILED],
         },
       })
       filterNodes(wrapper, filteredOutNodesCache)

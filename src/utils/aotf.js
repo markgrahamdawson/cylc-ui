@@ -444,12 +444,7 @@ export function processMutations (mutations, types) {
  * @return {Array<String>}
  */
 export function getStates (text) {
-  const defaultStates = [
-    WorkflowState.RUNNING.name,
-    WorkflowState.PAUSED.name,
-    WorkflowState.STOPPING.name,
-    WorkflowState.STOPPED.name
-  ]
+  const defaultStates = Object.values(WorkflowState)
   if (!text) {
     return defaultStates
   }

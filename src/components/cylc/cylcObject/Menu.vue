@@ -135,7 +135,7 @@ import {
   mdiPencil
 } from '@mdi/js'
 import { mapGetters, mapState } from 'vuex'
-import WorkflowState from '@/model/WorkflowState.model'
+import { WorkflowState } from '@/model/WorkflowState.model'
 import { VDialogTransition } from 'vuetify/components/transitions'
 
 export default {
@@ -261,7 +261,7 @@ export default {
           'workflow', [this.node.tokens.workflowID])
         if (nodeReturned.length) {
           this.workflowStatus = nodeReturned[0].node.status
-        } else { this.workflowStatus = WorkflowState.RUNNING.name }
+        } else { this.workflowStatus = WorkflowState.RUNNING }
       } else {
         this.workflowStatus = this.node.node.status
       }

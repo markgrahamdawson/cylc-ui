@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import TaskState from '@/model/TaskState.model'
+import { TaskState, TaskStateNames } from '@/model/TaskState.model'
 
 describe('Tree view', () => {
   it('Should display cycle points for the mocked workflow', () => {
@@ -217,7 +217,7 @@ describe('Tree view', () => {
       cy.get('[data-cy="filter task state"]')
         .click()
         .get('.v-list-item')
-        .contains(new RegExp(`^${TaskState.FAILED.name}$`))
+        .contains(new RegExp(`^${TaskState.FAILED}$`))
         .click()
       for (const name of [/^succeeded$/, /^retrying$/]) {
         cy.get('.node-data-task')
@@ -243,7 +243,7 @@ describe('Tree view', () => {
         .get('[data-cy="filter task state"]')
         .click()
         .get('.v-list-item')
-        .contains(TaskState.WAITING.name)
+        .contains(TaskState.WAITING)
         .click({ force: true })
       cy
         .get('.node-data-task:visible')
@@ -343,12 +343,11 @@ describe('Tree view', () => {
     cy.visit('/#/tree/one')
     cy.get('[data-cy="filter task state"]')
       .click()
-    // eslint-disable-next-line no-lone-blocks
-    TaskState.enumValues.forEach(state => {
+    for (const state of TaskStateNames) {
       cy.get('.v-list-item')
-        .contains(state.name)
+        .contains(state)
         .click({ force: true })
-    })
+    }
     // Click outside to close dropdown
     cy.get('noscript')
       .click({ force: true })

@@ -15,31 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Enumify } from 'enumify'
-
 /**
  * Cylc valid job states.
  *
  * @see https://cylc.github.io/cylc-admin/proposal-state-names.html#taskjob-states
  */
-class JobState extends Enumify {
-  static SUBMITTED = new JobState('submitted')
-  static SUBMIT_FAILED = new JobState('submit-failed')
-  static RUNNING = new JobState('running')
-  static SUCCEEDED = new JobState('succeeded')
-  static FAILED = new JobState('failed')
-  static _ = this.closeEnum()
-
-  /**
-   * Constructor.
-   * @param {String} name
-   */
-  constructor (name) {
-    super()
-    this.name = name
-  }
+export enum JobState {
+  SUBMITTED = 'submitted',
+  SUBMIT_FAILED = 'submit-failed',
+  RUNNING = 'running',
+  SUCCEEDED = 'succeeded',
+  FAILED = 'failed',
 }
 
-export const JobStateNames = JobState.enumValues.map(({ name }) => name)
-
-export default JobState
+export const JobStateNames: readonly JobState[] = Object.values(JobState)

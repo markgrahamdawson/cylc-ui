@@ -55,24 +55,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <td>Job</td>
               </tr>
               <tr
-                v-bind:key="state.name.name"
                 v-for="state of states"
+                :key="state"
               >
                 <td style="font-size: 2em;">
                   <!-- set times to make the progress change -->
                   <task
                     :task="{
-                      state: state.name,
-                      task: {meanElapsedTime: 30}
+                      state,
+                      task: { meanElapsedTime: 30 }
                     }"
                     :startTime="String(Date.now())"
                   />
                 </td>
                 <td>
-                  <span>{{ state.name }}</span>
+                  <span>{{ state }}</span>
                 </td>
                 <td style="font-size: 2em;">
-                  <job :status="state.name" />
+                  <job :status="state" />
                 </td>
               </tr>
             </table>
@@ -120,7 +120,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <template v-slot:prepend>
                   <task
                     style="font-size: 2em;"
-                    :task="{state: 'waiting', isHeld: true}"
+                    :task="{ state: TaskState.WAITING, isHeld: true }"
                     class="mr-4"
                   />
                 </template>
@@ -137,7 +137,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <template v-slot:prepend>
                   <task
                     style="font-size: 2em;"
-                    :task="{state: 'waiting', isQueued: true}"
+                    :task="{ state: TaskState.WAITING, isQueued: true }"
                     class="mr-4"
                   />
                 </template>
@@ -153,7 +153,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <template v-slot:prepend>
                   <task
                     style="font-size: 2em;"
-                    :task="{state: 'waiting', isRunahead: true}"
+                    :task="{ state: TaskState.WAITING, isRunahead: true }"
                     class="mr-4"
                   />
                 </template>
@@ -186,7 +186,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <script>
 import Task from '@/components/cylc/Task.vue'
 import Job from '@/components/cylc/Job.vue'
-import { TaskStateUserOrder } from '@/model/TaskState.model'
+import { TaskState, TaskStateUserOrder } from '@/model/TaskState.model'
 import { getPageTitle } from '@/utils'
 
 export default {
@@ -202,8 +202,9 @@ export default {
   },
   // TODO: extract task states and descriptions from the GraphQL API
   //       once this is an enumeration.
-  data: () => ({
-    states: TaskStateUserOrder
+  setup: () => ({
+    states: TaskStateUserOrder,
+    TaskState,
   })
 }
 </script>

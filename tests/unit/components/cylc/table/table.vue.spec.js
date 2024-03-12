@@ -19,7 +19,7 @@ import { mount } from '@vue/test-utils'
 import { createVuetify } from 'vuetify'
 import sinon from 'sinon'
 import { simpleTableTasks } from './table.data'
-import TaskState from '@/model/TaskState.model'
+import { TaskState } from '@/model/TaskState.model'
 import CylcObjectPlugin from '@/components/cylc/cylcObject/plugin'
 import Table from '@/components/cylc/table/Table.vue'
 import WorkflowService from '@/services/workflow.service'
@@ -106,7 +106,7 @@ describe('Table component', () => {
         wrapper.vm.tasksFilter = {
           id: '',
           states: [
-            TaskState.WAITING.name
+            TaskState.WAITING
           ]
         }
         // await nextTick()
@@ -122,7 +122,7 @@ describe('Table component', () => {
         wrapper.vm.tasksFilter = {
           id: 'taskA',
           states: [
-            TaskState.WAITING.name
+            TaskState.WAITING
           ]
         }
         expect(wrapper.vm.filteredTasks.length).to.equal(0)

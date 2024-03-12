@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import ViewState from '@/model/ViewState.model'
+import { ViewState } from '@/model/ViewState.model'
 import { toRaw } from 'vue'
 import { mapActions } from 'vuex'
 

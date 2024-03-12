@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import TaskState from '@/model/TaskState.model'
+import { TaskState } from '@/model/TaskState.model'
 
 const initialNumRows = 7
 
@@ -58,14 +58,14 @@ describe('Table view', () => {
         .should('have.length', initialNumRows)
       cy
         .get('td > div.d-flex > div')
-        .contains(TaskState.FAILED.name)
+        .contains(TaskState.FAILED)
         .should('be.visible')
       cy
         .get('[data-cy="filter task state"]')
         .click()
       cy
         .get('.v-list-item')
-        .contains(TaskState.RUNNING.name)
+        .contains(TaskState.RUNNING)
         .click({ force: true })
       cy
         .get('td > div.d-flex > div')
@@ -85,7 +85,7 @@ describe('Table view', () => {
         .click()
       cy
         .get('.v-list-item')
-        .contains(TaskState.SUCCEEDED.name)
+        .contains(TaskState.SUCCEEDED)
         .click({ force: true })
       cy
         .get('.c-table table > tbody > tr')

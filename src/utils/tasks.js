@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import TaskState from '@/model/TaskState.model'
+import { TaskState, TaskStateNames } from '@/model/TaskState.model'
 import { TASK_OUTPUT_NAMES } from '@/model/TaskOutput.model'
 
 /**
@@ -41,13 +41,8 @@ const isStoppedOrderedStates = [
  * @link @see https://github.com/cylc/cylc-flow/blob/d66ae5c3ce8c749c8178d1cd53cb8c81d1560346/lib/cylc/task_state_prop.py
  */
 function extractGroupState (childStates, isStopped = false) {
-  const states = isStopped ? isStoppedOrderedStates : TaskState.enumValues
-  for (const state of states) {
-    if (childStates.includes(state.name)) {
-      return state.name
-    }
-  }
-  return ''
+  const states = isStopped ? isStoppedOrderedStates : TaskStateNames
+  return states.find((state) => childStates.includes(state)) ?? ''
 }
 
 function latestJob (taskProxy) {

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { WorkflowStateOrder } from '@/model/WorkflowState.model'
+import { WorkflowState } from '@/model/WorkflowState.model'
 
 describe('Dashboard', () => {
   beforeEach(() => {
@@ -45,7 +45,7 @@ describe('Dashboard', () => {
       .then($tdElement => {
         return $tdElement[1].textContent.toLowerCase()
       })
-      .should('equal', [...WorkflowStateOrder.entries()][0][0])
+      .should('equal', Object.values(WorkflowState)[0])
   })
 
   it('Disables cylc hub button in single user mode', () => {

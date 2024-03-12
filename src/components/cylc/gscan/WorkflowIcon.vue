@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </template>
 
 <script>
-import WorkflowState from '@/model/WorkflowState.model'
+import { WorkflowStateIcons } from '@/model/WorkflowState.model'
 import { mdiHelpCircle } from '@mdi/js'
 
 /**
@@ -45,8 +45,7 @@ export default {
      * @returns {string} icon
      */
     getIcon () {
-      const state = WorkflowState.enumValues.find(({ name }) => name === this.status)
-      return state?.icon || mdiHelpCircle
+      return WorkflowStateIcons.get(this.status) ?? mdiHelpCircle
     }
   }
 }

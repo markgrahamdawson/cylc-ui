@@ -175,7 +175,7 @@ export default {
 
     nodeClass () {
       return {
-        'c-workflow-stopped': this.node.node?.status === WorkflowState.STOPPED.name,
+        'c-workflow-stopped': this.node.node?.status === WorkflowState.STOPPED,
       }
     }
   },

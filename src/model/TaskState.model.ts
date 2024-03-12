@@ -15,36 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Enumify } from 'enumify'
-
 /**
  * Cylc valid task states.
  */
-export class TaskState extends Enumify {
-  static SUBMIT_FAILED = new TaskState('submit-failed')
-  static FAILED = new TaskState('failed')
-  static EXPIRED = new TaskState('expired')
-  static RUNNING = new TaskState('running')
-  static SUBMITTED = new TaskState('submitted')
-  static PREPARING = new TaskState('preparing')
-  static WAITING = new TaskState('waiting')
-  static SUCCEEDED = new TaskState('succeeded')
-  static _ = this.closeEnum()
-
-  /**
-   * Constructor.
-   * @param {String} name
-   */
-  constructor (name) {
-    super()
-    this.name = name
-  }
+export enum TaskState {
+  SUBMIT_FAILED = 'submit-failed',
+  FAILED = 'failed',
+  EXPIRED = 'expired',
+  RUNNING = 'running',
+  SUBMITTED = 'submitted',
+  PREPARING = 'preparing',
+  WAITING = 'waiting',
+  SUCCEEDED = 'succeeded',
 }
+
+export const TaskStateNames: readonly TaskState[] = Object.values(TaskState)
 
 /**
  * Task states ordered for display purposes.
  */
-export const TaskStateUserOrder = [
+export const TaskStateUserOrder: readonly TaskState[] = [
   TaskState.WAITING,
   TaskState.PREPARING,
   TaskState.SUBMITTED,
@@ -54,7 +44,3 @@ export const TaskStateUserOrder = [
   TaskState.FAILED,
   TaskState.EXPIRED
 ]
-
-export const TaskStateNames = TaskStateUserOrder.map(({ name }) => name)
-
-export default TaskState

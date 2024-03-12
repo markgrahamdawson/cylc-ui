@@ -3805,7 +3805,6 @@ __metadata:
     cypress: "npm:13.7.0"
     cypress-vite: "npm:1.5.0"
     dedent: "npm:1.5.1"
-    enumify: "npm:2.0.0"
     eslint: "npm:8.57.0"
     eslint-config-standard: "npm:17.1.0"
     eslint-plugin-compat: "npm:4.2.0"
@@ -4251,13 +4250,6 @@ __metadata:
   version: 2.1.0
   resolution: "entities@npm:2.1.0"
   checksum: 10c0/dd96ed95f7e017b7fbbcdd39bd6dc3dea6638f747c00610b53f23ea461ac409af87670f313805d85854bfce04f96e17d83575f75b3b2920365d78678ccd2a405
-  languageName: node
-  linkType: hard
-
-"enumify@npm:2.0.0":
-  version: 2.0.0
-  resolution: "enumify@npm:2.0.0"
-  checksum: 10c0/641096d9614fa33738ace4aa3cbc17bb38a9a8ea906bfed3214e76e084c9f20f75f898fc4488ab8bbb0425800b629c7ccc6e646f2a05c51fb86d3636f06df291
   languageName: node
   linkType: hard
 

@@ -17,7 +17,7 @@
 
 import { cloneDeep, isEqual } from 'lodash'
 import gql from 'graphql-tag'
-import ViewState from '@/model/ViewState.model'
+import { ViewState } from '@/model/ViewState.model'
 import Subscription from '@/model/Subscription.model'
 import {
   dummyMutations,

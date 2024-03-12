@@ -23,7 +23,7 @@ import {
 describe('TaskState model', () => {
   describe('TaskStateUserOrder', () => {
     it('contains the same states as TaskState in a different order', () => {
-      expect([...TaskState].sort()).to.deep.equal(TaskStateUserOrder.sort())
+      expect(Object.values(TaskState).sort()).to.deep.equal(TaskStateUserOrder.sort())
     })
   })
 })

@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Enumify } from 'enumify'
-
 /**
  * Represents the state of a view, like views with subscriptions, or other views
  * that load data.
@@ -27,12 +25,9 @@ import { Enumify } from 'enumify'
  * @see https://dev.to/mpocock1/state-management-how-to-tell-a-bad-boolean-from-a-good-boolean-260n
  * @see https://lillo.dev/articles/slaying-a-ui-antipattern/1-fetch-data-with-elm-pattern/
  */
-class ViewState extends Enumify {
-  static NO_STATE = new ViewState()
-  static LOADING = new ViewState()
-  static ERROR = new ViewState()
-  static COMPLETE = new ViewState()
-  static _ = this.closeEnum()
+export enum ViewState {
+  NO_STATE,
+  LOADING,
+  ERROR,
+  COMPLETE,
 }
-
-export default ViewState

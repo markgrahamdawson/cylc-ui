@@ -15,40 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Enumify } from 'enumify'
-
-/**
- * @typedef {Object} TaskOutput
- * @property {string} name - enum name
- */
-class TaskOutput extends Enumify {
+export enum TaskOutput {
   // @see: https://cylc.github.io/cylc-admin/proposal-state-names.html#outputs
   // @see: https://github.com/cylc/cylc-flow/blob/bb79a6e03437927ecf97deb6a34fa8f1e7ab0835/cylc/flow/task_outputs.py
-  static EXPIRED = new TaskOutput('expired')
-  static SUBMITTED = new TaskOutput('submitted')
-  static SUBMIT_FAILED = new TaskOutput('submit-failed')
-  static STARTED = new TaskOutput('started')
-  static SUCCEEDED = new TaskOutput('succeeded')
-  static FAILED = new TaskOutput('failed')
-  static _ = this.closeEnum()
-
-  /**
-   * Constructor.
-   * @param {String} name
-   */
-  constructor (name) {
-    super()
-    this.name = name
-  }
+  EXPIRED = 'expired',
+  SUBMITTED = 'submitted',
+  SUBMIT_FAILED = 'submit-failed',
+  STARTED = 'started',
+  SUCCEEDED = 'succeeded',
+  FAILED = 'failed',
 }
 
-export const TASK_OUTPUT_NAMES = [
-  TaskOutput.SUBMITTED.name,
-  TaskOutput.STARTED.name,
-  TaskOutput.SUCCEEDED.name,
-  TaskOutput.SUBMIT_FAILED.name,
-  TaskOutput.FAILED.name,
-  TaskOutput.EXPIRED.name
+export const TASK_OUTPUT_NAMES: readonly TaskOutput[] = [
+  TaskOutput.SUBMITTED,
+  TaskOutput.STARTED,
+  TaskOutput.SUCCEEDED,
+  TaskOutput.SUBMIT_FAILED,
+  TaskOutput.FAILED,
+  TaskOutput.EXPIRED
 ]
-
-export default TaskOutput

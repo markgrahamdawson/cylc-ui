@@ -17,7 +17,7 @@
 
 import { shallowMount } from '@vue/test-utils'
 import WorkflowIcon from '@/components/cylc/gscan/WorkflowIcon.vue'
-import WorkflowState from '@/model/WorkflowState.model'
+import { WorkflowState, WorkflowStateIcons } from '@/model/WorkflowState.model'
 import { createVuetify } from 'vuetify'
 import { mdiHelpCircle } from '@mdi/js'
 
@@ -30,8 +30,8 @@ describe('WorkflowIcon', () => {
       expected: mdiHelpCircle
     },
     {
-      status: WorkflowState.STOPPED.name,
-      expected: WorkflowState.STOPPED.icon
+      status: WorkflowState.STOPPED,
+      expected: WorkflowStateIcons.get(WorkflowState.STOPPED)
     },
   ])('uses the right icon for state: $status', ({ status, expected }) => {
     const wrapper = shallowMount(WorkflowIcon, {

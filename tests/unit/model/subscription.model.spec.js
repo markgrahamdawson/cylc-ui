@@ -19,7 +19,7 @@ import sinon from 'sinon'
 import gql from 'graphql-tag'
 import Subscription from '@/model/Subscription.model'
 import SubscriptionQuery from '@/model/SubscriptionQuery.model'
-import ViewState from '@/model/ViewState.model'
+import { ViewState } from '@/model/ViewState.model'
 
 describe('SubscriptionQuery model', () => {
   const query = gql`query { workflow { id } }`
