@@ -70,7 +70,7 @@ function gscanWorkflowCompValue (node) {
  * Sorts according to getWorkflowTreeSortValue.
  */
 export function sortedWorkflowTree (cylcTree) {
-  const tree = []
+  const tree: any[] = []
   for (let node of cylcTree.children[0].children) {
     node = flattenWorkflowParts(node)
     if (node) {
