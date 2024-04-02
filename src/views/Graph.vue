@@ -283,16 +283,12 @@ export default {
   },
 
   mounted () {
-    if (!this.autoRefresh) {
-      // load the graph if the autorefresh is off
-      this.refreshTimer = setInterval(this.refresh, 1000)
-      this.refreshTimer = null
-    }
     // compile & instantiate graphviz wasm
     /** @type {Promise<Graphviz>} */
     this.graphviz = Graphviz.load()
     // allow render to happen before we go configuring svgPanZoom
     this.$nextTick(() => {
+      this.refresh()
       this.updateTimer()
     })
     this.mountSVGPanZoom()
@@ -589,7 +585,10 @@ export default {
       this.updating = true
 
       // extract the graph (non reactive lists of nodes & edges)
-      const nodes = this.getGraphNodes()
+      const nodes = await this.waitFor(() => {
+        const nodes = this.getGraphNodes()
+        return nodes.length ? nodes : false
+      })
       const edges = this.getGraphEdges()
 
       if (!nodes.length) {
@@ -623,11 +622,9 @@ export default {
       // obtain the node dimensions to use in the layout
       // NOTE: need to wait for the nodes to all be rendered before we can
       // measure them
-      let nodeDimensions
-      await this.waitFor(() => {
+      const nodeDimensions = await this.waitFor(() => {
         try {
-          nodeDimensions = this.getNodeDimensions(nodes)
-          return true // all nodes rendered
+          return this.getNodeDimensions(nodes) // all nodes rendered
         } catch {
           return false // one or more nodes awaiting render
         }
@@ -665,9 +662,8 @@ export default {
       // Will return when the callback returns something truthy.
       // OR after the configured number of retries
       for (let retry = 0; retry < retries; retry++) {
-        if (callback()) {
-          break
-        }
+        const ret = callback()
+        if (ret) return ret
         await new Promise(requestAnimationFrame)
         await this.$nextTick()
       }
