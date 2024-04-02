@@ -99,13 +99,13 @@ describe('Graph View', () => {
     cy.visit('/#/workspace/one')
     addView('Graph')
     waitForGraphLayout()
-    checkRemeberToolbarSettings('.autoRefresh', 'have.class', 'not.have.class')
+    checkRemeberToolbarSettings('[data-cy=control-autoRefresh]', 'have.class', 'not.have.class')
   })
 
   it('remembers transpose setting when switching between workflows', () => {
     cy.visit('/#/workspace/one')
     addView('Graph')
     waitForGraphLayout()
-    checkRemeberToolbarSettings('.transpose', 'not.have.class', 'have.class')
+    checkRemeberToolbarSettings('[data-cy=control-transpose]', 'not.have.class', 'have.class')
   })
 })
