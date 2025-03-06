@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         {{ error }}
       </span>
     </v-alert>
-    <pre class="log-text"><span
+    <pre data-cy="log-text"><span
       v-for="(log, index) in computedLogs"
       :key="index"
       :class="wordWrap ? 'text-pre-wrap' : 'text-pre'"
